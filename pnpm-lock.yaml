@@ -8,7 +8,6 @@ specifiers:
   '@openzeppelin/contracts': ^4.8.0
   '@openzeppelin/contracts-upgradeable': ^4.8.0
   '@openzeppelin/hardhat-upgrades': ^1.22.1
-  case: ^1.6.3
   chai: ^4.3.4
   cryptoenv: ^0.2.0
   dotenv: ^16.0.3
@@ -24,7 +23,6 @@ specifiers:
   require-or-mock: ^0.2.1
   solhint: ^3.3.6
   solidity-coverage: ^0.8.2
-  soliutils: ^0.0.4
   typescript: ^4.7.3
 
 dependencies:
@@ -38,7 +36,6 @@ devDependencies:
   '@openzeppelin/contracts': 4.8.0
   '@openzeppelin/contracts-upgradeable': 4.8.0
   '@openzeppelin/hardhat-upgrades': 1.22.1_bprfotlvpgeiztbpxak2xd3t2a
-  case: 1.6.3
   chai: 4.3.6
   cryptoenv: 0.2.0
   dotenv: 16.0.3
@@ -53,7 +50,6 @@ devDependencies:
   pretty-quick: 3.1.3_prettier@2.5.1
   solhint: 3.3.7
   solidity-coverage: 0.8.2_hardhat@2.12.7
-  soliutils: 0.0.4
   typescript: 4.7.3
 
 packages:
@@ -8498,13 +8494,6 @@ packages:
       web3-utils: 1.7.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /soliutils/0.0.4:
-    resolution: {integrity: sha512-qvNrYns30YMdhiOFrA6aY/1FPOxqbnkXuaIajTBIOfprYntg8IfLPj0R3WQyjyeM8dXt+TLQnvYXp3J+ac0jFA==}
-    dependencies:
-      '@openzeppelin/contracts': 4.8.0
-      '@openzeppelin/contracts-upgradeable': 4.8.0
     dev: true
 
   /source-map-resolve/0.5.3:
