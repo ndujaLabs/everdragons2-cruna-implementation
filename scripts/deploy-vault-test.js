@@ -52,8 +52,8 @@ async function main() {
   await deployUtils.Tx(everdragons2Protector.connect(e2Owner).safeMint2(e2Owner.address), "safeMint2 " + e2Owner.address);
 
   const receivers = [
-      deployer.address,
-      e2Owner.address,
+    deployer.address,
+    e2Owner.address,
     "0x38671F9A37bD37EA52aD63182D3Ff6a64e2692D6",
     "0x888De0501cDBd7f88654Eb22f9517a6c93bf014B",
     "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199",
@@ -62,8 +62,8 @@ async function main() {
     "0x1eF10ce9dFB6E006eC4Bd700E9cCF389bA6a2791",
     "0x68C71A03Eaca2A482193751952F801827A6AF8B9",
     "0x984e099842E3c593bAa861C446Ff15ca4c99BB60",
-    "0x34841e5C7858ca12916eeE69C515c29e2075802F"
-  ]
+    "0x34841e5C7858ca12916eeE69C515c29e2075802F",
+  ];
 
   // erc20
   bulls = await deployUtils.deploy("Bulls");
@@ -78,10 +78,7 @@ async function main() {
     await deployUtils.Tx(fatBelly.mint(address, pe("10000000")), "mint fatBelly for " + address);
     await deployUtils.Tx(particle.safeMint(address, 1), "safeMint particle for " + address);
     await deployUtils.Tx(stupidMonk.safeMint(address, 1), "safeMint stupidMonk for " + address);
-    await deployUtils.Tx(
-        uselessWeapons.mintBatch(address, [1, 2], [5, 2], "0x00"),
-        "mintBatch uselessWeapons for " + address
-    );
+    await deployUtils.Tx(uselessWeapons.mintBatch(address, [1, 2], [5, 2], "0x00"), "mintBatch uselessWeapons for " + address);
   }
 }
 
