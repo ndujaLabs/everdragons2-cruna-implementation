@@ -4,8 +4,13 @@ requirePath(".env");
 requirePath('export/deployed.json', "{}");
 
 require("dotenv").config();
-require("cryptoenv").parse(() => process.env.NODE_ENV !== "test");
 
+const taskName = process.argv[2];
+if (/(deploy|console)/.test(taskName)) {
+  require("cryptoenv").parse();
+}
+
+require("solidity-coverage");
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require('@openzeppelin/hardhat-upgrades');
