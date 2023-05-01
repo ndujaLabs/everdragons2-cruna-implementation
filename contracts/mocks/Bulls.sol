@@ -10,4 +10,10 @@ contract Bulls is ERC20, Ownable {
   function mint(address to, uint256 amount) public onlyOwner {
     _mint(to, amount);
   }
+
+  function mintBatch(address[] memory to, uint256[] memory amount) public onlyOwner {
+    for (uint256 i = 0; i < amount.length; i++) {
+      _mint(to[i], amount[i]);
+    }
+  }
 }

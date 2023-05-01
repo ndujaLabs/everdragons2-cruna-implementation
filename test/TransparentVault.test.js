@@ -17,7 +17,7 @@ describe("TransparentVault", function () {
   }
 
   beforeEach(async function () {
-    everdragons2Protector = await deployContractUpgradeable("Everdragons2ProtectorMintable", [], {from: e2Owner});
+    everdragons2Protector = await deployContractUpgradeable("Everdragons2ProtectorMintable", []);
 
     everdragons2TransparentVault = await deployContractUpgradeable("Everdragons2TransparentVault", [
       everdragons2Protector.address,

@@ -12,7 +12,11 @@ contract Everdragons2ProtectorMintable is Everdragons2Protector {
   }
 
   // this is used for simulations
-  function safeMint2(address to) public onlyOwner {
-    _safeMint(to, ++_nextTokenId);
+  function safeMint2(address to, uint256 amount) public onlyOwner {
+    uint256 start = _nextTokenId;
+    for (uint256 i = 0; i < amount; i++) {
+      _safeMint(to, ++start);
+    }
+    _nextTokenId = start;
   }
 }

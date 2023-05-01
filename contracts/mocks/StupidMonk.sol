@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract StupidMonk is ERC721, ERC721Enumerable, Ownable {
   string private _baseTokenURI;
+  uint256 private _nextTokenId;
 
   constructor(string memory baseTokenUri) ERC721("StupidMonk", "SMNK") {
     _baseTokenURI = baseTokenUri;
@@ -31,5 +32,15 @@ contract StupidMonk is ERC721, ERC721Enumerable, Ownable {
 
   function safeMint(address to, uint256 tokenId) public onlyOwner {
     _safeMint(to, tokenId);
+  }
+
+  function safeMintBatch(address[] memory to, uint256[] memory amount) public onlyOwner {
+    uint256 start = _nextTokenId;
+    for (uint256 i = 0; i < amount.length; i++) {
+      for (uint256 j = 0; j < amount[i]; j++) {
+        _safeMint(to[i], ++start);
+      }
+    }
+    _nextTokenId = start;
   }
 }

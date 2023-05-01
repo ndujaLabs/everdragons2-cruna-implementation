@@ -23,7 +23,7 @@ async function main() {
 
   let deployUtils = new DeployUtils(ethers);
   const chainId = await deployUtils.currentChainId();
-  let [deployer, e2Owner] = await ethers.getSigners();
+  let [deployer] = await ethers.getSigners();
 
   const network = supportedNetwork[chainId];
 
@@ -34,26 +34,14 @@ async function main() {
 
   console.log("Deploying contracts with the account:", deployer.address, "to", network);
 
-  everdragons2Protector = await deployUtils.deployProxy("Everdragons2ProtectorMintable", e2Owner.address);
+  everdragons2Protector = await deployUtils.deployProxy("Everdragons2ProtectorMintable");
 
-  everdragons2TransparentVault = await deployUtils.deployProxy(
-    "TransparentVault",
-    everdragons2Protector.address,
-    "Everdragons2"
-  );
+  everdragons2TransparentVault = await deployUtils.deployProxy("Everdragons2TransparentVault", everdragons2Protector.address);
 
   await deployUtils.Tx(everdragons2Protector.addSubordinate(everdragons2TransparentVault.address), "addSubordinate");
-  tokenUtils = await deployUtils.deploy("TokenUtils");
-  await deployUtils.Tx(everdragons2TransparentVault.setTokenUtils(tokenUtils.address), "setTokenUtils");
-
-  await deployUtils.Tx(everdragons2Protector.connect(e2Owner).safeMint2(deployer.address), "safeMint2 " + deployer.address);
-  await deployUtils.Tx(everdragons2Protector.connect(e2Owner).safeMint2(deployer.address), "safeMint2 " + deployer.address);
-  await deployUtils.Tx(everdragons2Protector.connect(e2Owner).safeMint2(e2Owner.address), "safeMint2 " + e2Owner.address);
-  await deployUtils.Tx(everdragons2Protector.connect(e2Owner).safeMint2(e2Owner.address), "safeMint2 " + e2Owner.address);
 
   const receivers = [
-    deployer.address,
-    e2Owner.address,
+    "0x654458Fa16d477c3749A95Eed08d49306977c880",
     "0x38671F9A37bD37EA52aD63182D3Ff6a64e2692D6",
     "0x888De0501cDBd7f88654Eb22f9517a6c93bf014B",
     "0x8626f6940E2eb28930eFb4CeF49B2d1F2C9C1199",
@@ -72,12 +60,19 @@ async function main() {
   stupidMonk = await deployUtils.deploy("StupidMonk", "https://data.mob.land/genesis_blueprints/json/");
   uselessWeapons = await deployUtils.deploy("UselessWeapons", "https://api.mob.land/wl/{id}");
 
+  let values = [];
+  let amounts = [];
   for (let address of receivers) {
-    await deployUtils.Tx(bulls.mint(address, pe("1000000")), "mint bulls for " + address);
+    values.push(pe(1000000));
+    amounts.push(5);
+  }
+  await deployUtils.Tx(bulls.mintBatch(receivers, values), "mint bulls");
+  await deployUtils.Tx(fatBelly.mintBatch(receivers, values), "mint fatBelly");
+  await deployUtils.Tx(particle.safeMintBatch(receivers, amounts), "safeMint particle");
+  await deployUtils.Tx(stupidMonk.safeMintBatch(receivers, amounts), "safeMint stupidMonk");
 
-    await deployUtils.Tx(fatBelly.mint(address, pe("10000000")), "mint fatBelly for " + address);
-    await deployUtils.Tx(particle.safeMint(address, 1), "safeMint particle for " + address);
-    await deployUtils.Tx(stupidMonk.safeMint(address, 1), "safeMint stupidMonk for " + address);
+  for (let address of receivers) {
+    await deployUtils.Tx(everdragons2Protector.safeMint2(address, 5), "safeMint2 " + address);
     await deployUtils.Tx(uselessWeapons.mintBatch(address, [1, 2], [5, 2], "0x00"), "mintBatch uselessWeapons for " + address);
   }
 }
